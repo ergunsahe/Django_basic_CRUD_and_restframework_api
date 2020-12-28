@@ -6,11 +6,14 @@
 
 
 {% block content %}
+<div style="margin-top: 10rem; margin-left: 15rem;">
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Update">
         <a href="{% url 'list' %}"><button>Cancel</button></a>
     </form>
+
+</div>
 {% endblock content %}
     

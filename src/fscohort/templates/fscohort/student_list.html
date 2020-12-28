@@ -5,15 +5,17 @@
 {% endblock title %}
 
 {% block content %}
-<h3>Student List</h3>
-    <ul>
-        
-        {% for student in students %}
-        <a href="{% url 'detail' student.id%}">
-            <li>{{ student|title}}</li>
-        {% endfor %}
-        </a>    
-    </ul>
+<div style="margin-top: 10rem; margin-left: 15rem;">
+    <h3>Student List</h3>
+        <ul>
+            
+            {% for student in students %}
+            <a href="{% url 'detail' student.id%}">
+                <li style="margin-top: 1rem;">{{ student|title}}</li>
+            {% endfor %}
+            </a>    
+        </ul>
+</div>
 {% endblock content %}
     
     

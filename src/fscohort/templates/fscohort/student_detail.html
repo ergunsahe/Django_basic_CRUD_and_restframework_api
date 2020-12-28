@@ -5,10 +5,12 @@ Student Detail
 {% endblock title %}
 
 {% block content %}
-<h4>Student Detail</h4>
-    {{student.number}}-{{student|title}} {{student.last_name|title}}
-    <a href="{% url 'delete' student.id%}"><button>Delete</button></a>
-    <a href="{% url 'update' student.id%}"><button>Edit</button></a>
+<div style="margin-top: 10rem; margin-left: 15rem;">
+    <h4>Student Detail</h4>
+        {{student.number}}-{{student|title}} {{student.last_name|title}}
+        <a href="{% url 'delete' student.id%}" style="margin-left: 2rem;"><button>Delete</button></a>
+        <a href="{% url 'update' student.id%}" style="margin-left: 2rem;"><button>Edit</button></a>
+</div>
 {% endblock content %}
     
     

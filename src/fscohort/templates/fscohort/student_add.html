@@ -6,10 +6,12 @@
     
 
 {% block content %}
-<form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Add">
+<div style="margin-top: 10rem; margin-left: 15rem;">
+    <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Add">
     </form>
+</div>
 {% endblock content %}
     
