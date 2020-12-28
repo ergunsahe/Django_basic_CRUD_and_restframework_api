@@ -1,0 +1,38 @@
+{% extends 'fscohort/base.html' %}
+
+{% block title %}
+    Home Page
+{% endblock title %}
+    
+
+{% block content %}
+<div style="margin-top: 5rem; margin-left: 10rem;">
+    <h1>Hello, this is home page</h1>
+    <a href="{% url 'list' %}" style="margin-right: 3rem;"><button>See Student List</button></a>
+    <a href="{% url 'add' %}"><button>Add New Student</button></a>
+</div>
+    
+{% endblock %}
+    
+    <!-- <form action="." method="GET">
+        {{ form }}
+    </form> -->
+    <!-- <form action="https://www.google.com/search?" method="GET">
+        <input type="text" name="q" placeholder="Title">
+        <input type="submit" value="Search">
+    </form> -->
+    <!-- {{ title|title }} <br>
+    {{ sec_tit|safe }} <br>
+    {{ title|title|add:" is the best" }} <br>
+    {{ dict_1.django }} <br>
+    
+    {% for i in my_list %} 
+    {% if i == 2 %}
+    <p>bu sayı 2 ye eşittir</p>
+    {% else %}
+    {{ i}} <br>
+        
+    {% endif %}
+        
+    {% endfor %} -->
+        
