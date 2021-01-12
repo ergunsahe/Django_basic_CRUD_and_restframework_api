@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from fscohort.models import Student
 from django.http import JsonResponse
 from django.core.serializers import serialize
@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import StudentSerializer
 from rest_framework import status
+
 
 # Create your views here.
 
@@ -33,16 +34,36 @@ def student_list_create_api(request):
     elif request.method == "POST":
         serializer = StudentSerializer(data=request.data)
         if serializer.is_valid():
+            # student = form.save(commit=False)
+            # student.teacher = request.user
+            # student.save()
             serializer.save()
             data = {
                 "message": "Student created successfully !"
             }
             return Response(data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+        return  Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
 
 
 
+@api_view(["GET", "PUT", "DELETE"])   
+def student_get_update_delete(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == "GET":
+        serializer = StudentSerializer(student)
+        return Response(serializer.data)
+    if request.method == "PUT":
+        serializer = StudentSerializer(Student, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            data={
+                "message": "Student updated successfully!"
+            }
+            return Response(data)
+        return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+    if request.method == "DELETE":
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
