@@ -14,6 +14,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 #-------------------------------------
 from rest_framework import generics
+#-------------------------------------
+from rest_framework import mixins
 
 
 # Create your views here.
@@ -28,6 +30,9 @@ def home_api(request):
     
     return JsonResponse(data)
 
+
+
+# generics class base rest framework api
 
 class StudentList(generics.ListCreateAPIView):
     serializer_class = StudentSerializer
@@ -47,19 +52,34 @@ class StudentUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+# class base mixins rest framework
+# class Student(generics.GenericAPIView, mixins.ListModelMixin,mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, mixins.RetrieveModelMixin):
+#     serializer_class = StudentSerializer
+#     queryset = Student.objects.all()
+#     lookup_field = "id"
+    
+#     def get(self, request, id=None):
+#         if id:
+#             return self.retrieve(request)
+#         else:
+#             return self.list(request)
+        
+#     def post(self, request):
+#         return self.create(request)
+    
+#     def put(self, request, id=None):
+#         return self.update(request, id)
+    
+#     def delete(self, request, id):
+#         return self.destroy(request, id)
+            
 
 
 
 
 
 
-
-
-
-
-
-
-
+# class base with rest framework api
 
 # class StudentList(APIView):
 #     def get(self, request):
@@ -108,15 +128,6 @@ class StudentUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-
-
-
-
-
-
-
-
-
 # with rest framework functional API
 
 # @api_view(["GET", "POST"])
@@ -161,21 +172,6 @@ class StudentUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
 #     if request.method == "DELETE":
 #         student.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
