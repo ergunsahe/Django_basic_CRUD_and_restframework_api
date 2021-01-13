@@ -5,10 +5,15 @@ from django.core.serializers import serialize
 import json
 from django.views.decorators.csrf import csrf_exempt
 # from django.http import HttpResponse
+# -------------------------------------
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import StudentSerializer
 from rest_framework import status
+# --------------------------------------
+from rest_framework.views import APIView
+#-------------------------------------
+from rest_framework import generics
 
 
 # Create your views here.
@@ -23,48 +28,82 @@ def home_api(request):
     
     return JsonResponse(data)
 
-@api_view(["GET", "POST"])
-def student_list_create_api(request):
-    if request.method == "GET":
-        students = Student.objects.all()
-        serializer = StudentSerializer(students, many=True)
+
+class StudentList(generics.ListCreateAPIView):
+    serializer_class = StudentSerializer
+    queryset = Student.objects.all()
+
+# class StudentList(generics.ListAPIView):
+#     serializer_class = StudentSerializer
+#     queryset = Student.objects.all()
+# class StudentCreate(generics.CreateAPIView):
+#     serializer_class = StudentSerializer
+#     queryset = Student.objects.all()
+
+class StudentUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = StudentSerializer
+    queryset = Student.objects.all()
+    lookup_field = "id"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class StudentList(APIView):
+#     def get(self, request):
+#         students = Student.objects.all()
+#         serializer = StudentSerializer(students, many=True)
         
-        return Response(serializer.data)
+#         return Response(serializer.data)
+#     def post(self, request):
+#         serializer = StudentSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return  Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
     
-    elif request.method == "POST":
-        serializer = StudentSerializer(data=request.data)
-        if serializer.is_valid():
-            # student = form.save(commit=False)
-            # student.teacher = request.user
-            # student.save()
-            serializer.save()
-            data = {
-                "message": "Student created successfully !"
-            }
-            return Response(data, status=status.HTTP_201_CREATED)
-        return  Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
-
-
-
-@api_view(["GET", "PUT", "DELETE"])   
-def student_get_update_delete(request, id):
-    student = get_object_or_404(Student, id=id)
-    if request.method == "GET":
-        serializer = StudentSerializer(student)
-        return Response(serializer.data)
-    if request.method == "PUT":
-        serializer = StudentSerializer(Student, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            data={
-                "message": "Student updated successfully!"
-            }
-            return Response(data)
-        return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
-    if request.method == "DELETE":
-        student.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
+    
+# class StudentUpdateDelete(APIView):
+#     def get_object(self, id):
+#         try:
+#             return Student.objects.get(id=id)
+#         except Student.DoesNotExist:
+#             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+#     def get(self, request, id):
+#         student = self.get_object(id)
+#         # student = get_object_or_404(Student, id=id)
+#         serializer = StudentSerializer(student)
+#         return Response(serializer.data)
+    
+#     def put(self, request, id):
+#         student = self.get_object(id)
+#         serializer = StudentSerializer(student, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             data = {
+#                 "message": "Student updated successfully !"
+#             }
+#             return Response(data)
+#         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+#     def delete(self, request, id):
+#         student = self.get_object(id)
+#         student.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+            
 
 
 
@@ -78,11 +117,69 @@ def student_get_update_delete(request, id):
 
 
 
+# with rest framework functional API
+
+# @api_view(["GET", "POST"])
+# def student_list_create_api(request):
+#     if request.method == "GET":
+#         students = Student.objects.all()
+#         serializer = StudentSerializer(students, many=True)
+        
+#         return Response(serializer.data)
+    
+#     elif request.method == "POST":
+#         serializer = StudentSerializer(data=request.data)
+#         if serializer.is_valid():
+#             # student = form.save(commit=False)
+#             # student.teacher = request.user
+#             # student.save()
+#             serializer.save()
+#             data = {
+#                 "message": "Student created successfully !"
+#             }
+#             return Response(data, status=status.HTTP_201_CREATED)
+#         return  Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+
+
+
+# @api_view(["GET", "PUT", "DELETE"])   
+# def student_get_update_delete(request, id):
+#     student = get_object_or_404(Student, id=id)
+#     if request.method == "GET":
+#         serializer = StudentSerializer(student)
+#         return Response(serializer.data)
+#     if request.method == "PUT":
+#         serializer = StudentSerializer(student, data=request.data)
+#         if serializer.is_valid():
+#             # serializer.save(teacher=request.user)
+#             serializer.save()
+#             data={
+#                 "message": "Student updated successfully!"
+#             }
+#             return Response(data)
+#         return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+#     if request.method == "DELETE":
+#         student.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# without rest framework functional API
 
 # def student_list_api(request):
 #     if request.method == "GET":
